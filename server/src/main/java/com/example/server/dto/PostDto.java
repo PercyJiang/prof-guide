@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserSignupRequest {
-    private String username;
-    private String password;
+public class PostDto {
+    private Long id;
+    private Integer score;
+    private Integer difficulty;
+    private String comment;
 }

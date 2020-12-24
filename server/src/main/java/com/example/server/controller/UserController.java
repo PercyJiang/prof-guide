@@ -1,6 +1,6 @@
 package com.example.server.controller;
 
-import com.example.server.dto.UserSignupRequest;
+import com.example.server.dto.UserDto;
 import com.example.server.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,10 +19,10 @@ public class UserController {
         return "Hello";
     }
 
-    @PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestBody UserSignupRequest request) {
-        userService.signup(request);
-        return new ResponseEntity<>("User Signup Success", HttpStatus.OK);
+    @PostMapping("/create")
+    public ResponseEntity<String> create(@RequestBody UserDto dto) {
+        userService.create(dto);
+        return new ResponseEntity<>("User Create Success", HttpStatus.OK);
     }
 
 }

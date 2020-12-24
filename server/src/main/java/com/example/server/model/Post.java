@@ -7,8 +7,10 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotBlank;
 
+import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
 
 @Data
@@ -26,4 +28,8 @@ public class Post {
     private Integer difficulty;
     @NotBlank(message = "Comment is required")
     private String comment;
+    @ManyToOne(fetch = LAZY)
+    private User user;
+    @ManyToOne(fetch = LAZY)
+    private Professor professor;
 }

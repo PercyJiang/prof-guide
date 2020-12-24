@@ -1,6 +1,6 @@
 package com.example.server.service;
 
-import com.example.server.dto.UserSignupRequest;
+import com.example.server.dto.UserDto;
 import com.example.server.model.User;
 import com.example.server.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -14,13 +14,13 @@ import java.time.Instant;
 @Transactional
 public class UserService {
 
-    private final UserRepository userRepository;
+    private final UserRepository repository;
 
-    public void signup(UserSignupRequest request) {
+    public void create(UserDto dto) {
         User user = new User();
-        user.setUsername(request.getUsername());
-        user.setPassword(request.getPassword());
+        user.setUsername(dto.getUsername());
+        user.setPassword(dto.getPassword());
         user.setCreated(Instant.now());
-        userRepository.save(user);
+        repository.save(user);
     }
 }
