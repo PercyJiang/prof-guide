@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.ArrayList;
 
 @Service
 @AllArgsConstructor
@@ -21,6 +22,7 @@ public class UserService {
         user.setUsername(dto.getUsername());
         user.setPassword(dto.getPassword());
         user.setCreated(Instant.now());
+        user.setPosts(new ArrayList<>());
         repository.save(user);
     }
 }

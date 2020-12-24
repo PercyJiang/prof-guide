@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
+import java.util.ArrayList;
 
 @Service
 @AllArgsConstructor
 public class ProfessorService {
+
     private final ProfessorRepository repository;
 
     @Transactional
@@ -20,6 +22,7 @@ public class ProfessorService {
         professor.setProfName(dto.getProfName());
         professor.setSchoolName(dto.getSchoolName());
         professor.setCreatedDate(Instant.now());
+        professor.setPosts(new ArrayList<>());
         repository.save(professor);
     }
 }
