@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -24,5 +25,21 @@ public class UserService {
         user.setCreated(Instant.now());
         user.setPosts(new ArrayList<>());
         repository.save(user);
+    }
+
+    @Transactional(readOnly = true)
+    public List<UserDto> getAll() {
+        List<UserDto> dtos = new ArrayList<>();
+        List<User> users = repository.findAll();
+        for (User user : users) {
+            UserDto dto = new UserDto();
+            dto.setId(user.getUserId());
+            dto.setUsername(user.getUsername());
+            dto.setPassword(user.getPassword());
+            dto.setCreated(user.getCreated());
+            dto.setPosts(user.getPosts());
+            dtos.add(dto);
+        }
+        return dtos;
     }
 }

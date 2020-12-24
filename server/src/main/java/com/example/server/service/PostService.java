@@ -7,6 +7,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class PostService {
@@ -22,5 +25,22 @@ public class PostService {
         post.setUser(dto.getUser());
         post.setProfessor(dto.getProfessor());
         repository.save(post);
+    }
+
+    @Transactional(readOnly = true)
+    public List<PostDto> getAll() {
+        List<PostDto> dtos = new ArrayList<>();
+        List<Post> posts = repository.findAll();
+        for (Post post : posts) {
+            PostDto dto = new PostDto();
+            dto.setId(post.getId());
+            dto.setScore(post.getScore());
+            dto.setDifficulty(post.getDifficulty());
+            dto.setComment(post.getComment());
+            dto.setProfessor(post.getProfessor());
+            dto.setUser(post.getUser());
+            dtos.add(dto);
+        }
+        return dtos;
     }
 }

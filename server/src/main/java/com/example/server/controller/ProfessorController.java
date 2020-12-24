@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/prof")
 @AllArgsConstructor
@@ -23,5 +25,10 @@ public class ProfessorController {
     public ResponseEntity<String> create(@RequestBody ProfessorDto dto) {
         service.create(dto);
         return new ResponseEntity<>("Professor Create Success", HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ProfessorDto>> getAll() {
+        return ResponseEntity.status(HttpStatus.OK).body(service.getAll());
     }
 }
