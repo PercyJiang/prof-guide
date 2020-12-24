@@ -12,16 +12,16 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 public class UserController {
 
-    private final UserService userService;
+    private final UserService service;
 
     @GetMapping("/hello")
     public String hello() {
-        return "Hello";
+        return "Hello " + getClass().getName();
     }
 
     @PostMapping("/create")
     public ResponseEntity<String> create(@RequestBody UserDto dto) {
-        userService.create(dto);
+        service.create(dto);
         return new ResponseEntity<>("User Create Success", HttpStatus.OK);
     }
 
