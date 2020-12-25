@@ -23,8 +23,7 @@ public class UserController {
 
     @PostMapping("/create")
     public ResponseEntity<String> create(@RequestBody UserDto dto) {
-        service.create(dto);
-        return new ResponseEntity<>("User Create Success", HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
     }
 
     @GetMapping

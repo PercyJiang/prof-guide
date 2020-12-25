@@ -1,7 +1,6 @@
 package com.example.server.service;
 
 import com.example.server.dto.PostDto;
-import com.example.server.exceptions.NotFoundException;
 import com.example.server.model.Post;
 import com.example.server.repository.PostRepository;
 import lombok.AllArgsConstructor;
@@ -18,7 +17,7 @@ public class PostService {
     private final PostRepository repository;
 
     @Transactional
-    public void create(PostDto dto) {
+    public String create(PostDto dto) {
         Post post = new Post();
         post.setScore(dto.getScore());
         post.setDifficulty(dto.getDifficulty());
@@ -26,6 +25,7 @@ public class PostService {
         post.setUser(dto.getUser());
         post.setProfessor(dto.getProfessor());
         repository.save(post);
+        return "Post Create Success";
     }
 
     @Transactional(readOnly = true)
@@ -48,7 +48,8 @@ public class PostService {
     @Transactional(readOnly = true)
     public PostDto get(Long id) {
         PostDto dto = new PostDto();
-        Post post = repository.findById(id).orElseThrow(() -> new NotFoundException("Id " + id + " not found"));
+        Post post = repository.findById(id).orElse(null);
+        if (post == null) return null;
         dto.setId(post.getId());
         dto.setScore(post.getScore());
         dto.setDifficulty(post.getDifficulty());
@@ -59,16 +60,21 @@ public class PostService {
     }
 
     @Transactional
-    public void update(Long id, PostDto dto) {
-        Post post = repository.findById(id).orElseThrow(() -> new NotFoundException("Id " + id + " not found"));
+    public String update(Long id, PostDto dto) {
+        Post post = repository.findById(id).orElse(null);
+        if (post == null) return "Post id " + id + " not found";
         post.setScore(dto.getScore());
         post.setDifficulty(dto.getDifficulty());
         post.setComment(dto.getComment());
         repository.save(post);
+        return "Post Update Success";
     }
 
     @Transactional
-    public void delete(Long id) {
+    public String delete(Long id) {
+        Post post = repository.findById(id).orElse(null);
+        if (post == null) return "Post id " + id + " not found";
         repository.deleteById(id);
+        return "Post Delete Success";
     }
 }

@@ -23,8 +23,7 @@ public class PostController {
 
     @PostMapping("/create")
     public ResponseEntity<String> create(@RequestBody PostDto dto) {
-        service.create(dto);
-        return new ResponseEntity<>("Post Create Success", HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
     }
 
     @GetMapping
@@ -39,13 +38,11 @@ public class PostController {
 
     @PutMapping("/{id}")
     public ResponseEntity<String> update(@PathVariable Long id, @RequestBody PostDto dto) {
-        service.update(id, dto);
-        return new ResponseEntity<>("Post Update Success", HttpStatus.ACCEPTED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.update(id, dto));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> delete(@PathVariable Long id) {
-        service.delete(id);
-        return new ResponseEntity<>("Post Delete Success", HttpStatus.ACCEPTED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.delete(id));
     }
 }

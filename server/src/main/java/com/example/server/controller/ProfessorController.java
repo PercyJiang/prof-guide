@@ -23,8 +23,7 @@ public class ProfessorController {
 
     @PostMapping("/create")
     public ResponseEntity<String> create(@RequestBody ProfessorDto dto) {
-        service.create(dto);
-        return new ResponseEntity<>("Professor Create Success", HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
     }
 
     @GetMapping

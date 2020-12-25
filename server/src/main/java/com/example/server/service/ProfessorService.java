@@ -1,7 +1,6 @@
 package com.example.server.service;
 
 import com.example.server.dto.ProfessorDto;
-import com.example.server.exceptions.NotFoundException;
 import com.example.server.model.Professor;
 import com.example.server.repository.ProfessorRepository;
 import lombok.AllArgsConstructor;
@@ -19,13 +18,14 @@ public class ProfessorService {
     private final ProfessorRepository repository;
 
     @Transactional
-    public void create(ProfessorDto dto) {
+    public String create(ProfessorDto dto) {
         Professor professor = new Professor();
         professor.setProfName(dto.getProfName());
         professor.setSchoolName(dto.getSchoolName());
         professor.setCreatedDate(Instant.now());
         professor.setPosts(new ArrayList<>());
         repository.save(professor);
+        return "Professor Create Success";
     }
 
     @Transactional(readOnly = true)
@@ -47,7 +47,8 @@ public class ProfessorService {
     @Transactional(readOnly = true)
     public ProfessorDto get(Long id) {
         ProfessorDto dto = new ProfessorDto();
-        Professor professor = repository.findById(id).orElseThrow(() -> new NotFoundException("Id " + id + " not found"));
+        Professor professor = repository.findById(id).orElse(null);
+        if (professor == null) return null;
         dto.setId(professor.getId());
         dto.setId(professor.getId());
         dto.setProfName(professor.getProfName());
