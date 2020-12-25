@@ -42,4 +42,10 @@ public class PostController {
         service.update(id, dto);
         return new ResponseEntity<>("Post Update Success", HttpStatus.ACCEPTED);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        service.delete(id);
+        return new ResponseEntity<>("Post Delete Success", HttpStatus.ACCEPTED);
+    }
 }

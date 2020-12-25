@@ -66,4 +66,9 @@ public class PostService {
         post.setComment(dto.getComment());
         repository.save(post);
     }
+
+    @Transactional
+    public void delete(Long id) {
+        repository.deleteById(id);
+    }
 }
