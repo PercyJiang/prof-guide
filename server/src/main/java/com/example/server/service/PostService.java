@@ -57,4 +57,13 @@ public class PostService {
         dto.setUser(post.getUser());
         return dto;
     }
+
+    @Transactional
+    public void update(Long id, PostDto dto) {
+        Post post = repository.findById(id).orElseThrow(() -> new NotFoundException("Id " + id + " not found"));
+        post.setScore(dto.getScore());
+        post.setDifficulty(dto.getDifficulty());
+        post.setComment(dto.getComment());
+        repository.save(post);
+    }
 }
