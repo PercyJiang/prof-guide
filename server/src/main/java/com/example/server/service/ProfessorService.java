@@ -1,9 +1,8 @@
 package com.example.server.service;
 
 import com.example.server.dto.ProfessorDto;
-import com.example.server.dto.UserDto;
+import com.example.server.exceptions.NotFoundException;
 import com.example.server.model.Professor;
-import com.example.server.model.User;
 import com.example.server.repository.ProfessorRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -43,5 +42,18 @@ public class ProfessorService {
             dtos.add(dto);
         }
         return dtos;
+    }
+
+    @Transactional(readOnly = true)
+    public ProfessorDto get(Long id) {
+        ProfessorDto dto = new ProfessorDto();
+        Professor professor = repository.findById(id).orElseThrow(() -> new NotFoundException("Id " + id + " not found"));
+        dto.setId(professor.getId());
+        dto.setId(professor.getId());
+        dto.setProfName(professor.getProfName());
+        dto.setSchoolName(professor.getSchoolName());
+        dto.setCreatedDate(professor.getCreatedDate());
+        dto.setPosts(professor.getPosts());
+        return dto;
     }
 }

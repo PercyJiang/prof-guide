@@ -1,6 +1,7 @@
 package com.example.server.service;
 
 import com.example.server.dto.PostDto;
+import com.example.server.exceptions.NotFoundException;
 import com.example.server.model.Post;
 import com.example.server.repository.PostRepository;
 import lombok.AllArgsConstructor;
@@ -42,5 +43,18 @@ public class PostService {
             dtos.add(dto);
         }
         return dtos;
+    }
+
+    @Transactional(readOnly = true)
+    public PostDto get(Long id) {
+        PostDto dto = new PostDto();
+        Post post = repository.findById(id).orElseThrow(() -> new NotFoundException("Id " + id + " not found"));
+        dto.setId(post.getId());
+        dto.setScore(post.getScore());
+        dto.setDifficulty(post.getDifficulty());
+        dto.setComment(post.getComment());
+        dto.setProfessor(post.getProfessor());
+        dto.setUser(post.getUser());
+        return dto;
     }
 }

@@ -31,4 +31,9 @@ public class PostController {
     public ResponseEntity<List<PostDto>> getAll() {
         return ResponseEntity.status(HttpStatus.OK).body(service.getAll());
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PostDto> get(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(service.get(id));
+    }
 }

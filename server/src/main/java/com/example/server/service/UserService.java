@@ -1,6 +1,7 @@
 package com.example.server.service;
 
 import com.example.server.dto.UserDto;
+import com.example.server.exceptions.NotFoundException;
 import com.example.server.model.User;
 import com.example.server.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -33,7 +34,7 @@ public class UserService {
         List<User> users = repository.findAll();
         for (User user : users) {
             UserDto dto = new UserDto();
-            dto.setId(user.getUserId());
+            dto.setId(user.getId());
             dto.setUsername(user.getUsername());
             dto.setPassword(user.getPassword());
             dto.setCreated(user.getCreated());
@@ -41,5 +42,17 @@ public class UserService {
             dtos.add(dto);
         }
         return dtos;
+    }
+
+    @Transactional(readOnly = true)
+    public UserDto get(Long id) {
+        UserDto dto = new UserDto();
+        User user = repository.findById(id).orElseThrow(() -> new NotFoundException("Id " + id + " not found"));
+        dto.setId(user.getId());
+        dto.setUsername(user.getUsername());
+        dto.setPassword(user.getPassword());
+        dto.setCreated(user.getCreated());
+        dto.setPosts(user.getPosts());
+        return dto;
     }
 }
