@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { UserModel } from '../model/user';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -7,4 +9,12 @@ import { HttpClient } from '@angular/common/http';
 export class UserService {
 
   constructor(private http: HttpClient) { }
+
+  create(userModel: UserModel): Observable<UserModel> {
+    return this.http.post<UserModel>(server_url + '/api/user/create', userModel)
+  }
+
+  get(id: number): Observable<UserModel> {
+    return this.http.get<UserModel>(server_url + '/api/user/get/' + id)
+  }
 }
