@@ -50,11 +50,28 @@ public class ProfessorService {
         Professor professor = repository.findById(id).orElse(null);
         if (professor == null) return null;
         dto.setId(professor.getId());
-        dto.setId(professor.getId());
         dto.setProfName(professor.getProfName());
         dto.setSchoolName(professor.getSchoolName());
         dto.setCreatedDate(professor.getCreatedDate());
         dto.setPosts(professor.getPosts());
         return dto;
+    }
+
+    @Transactional
+    public String update(Long id, ProfessorDto dto) {
+        Professor professor = repository.findById(id).orElse(null);
+        if (professor == null) return "Professor id " + id + " not found";
+        professor.setProfName(dto.getProfName());
+        professor.setSchoolName(dto.getSchoolName());
+        repository.save(professor);
+        return "Professor Update Success";
+    }
+
+    @Transactional
+    public String delete(Long id) {
+        Professor professor = repository.findById(id).orElse(null);
+        if (professor == null) return "Professor id " + id + " not found";
+        repository.deleteById(id);
+        return "Professor Delete Success";
     }
 }

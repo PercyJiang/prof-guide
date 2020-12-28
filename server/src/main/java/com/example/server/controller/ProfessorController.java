@@ -35,4 +35,14 @@ public class ProfessorController {
     public ResponseEntity<ProfessorDto> get(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(service.get(id));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody ProfessorDto dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.update(id, dto));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> delete(@PathVariable Long id) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.delete(id));
+    }
 }
