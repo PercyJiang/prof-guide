@@ -11,14 +11,22 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
 import { MatCardModule } from '@angular/material/card'
 import { ProfessorComponent } from './components/professor/professor.component'
-import { PostComponent } from './components/post/post.component'
+import { PostComponent } from './components/post/post.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { LogInComponent } from './components/log-in/log-in.component';
+import { CreateProfessorComponent } from './components/create-professor/create-professor.component';
+import { CreatePostComponent } from './components/create-post/create-post.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     ProfessorComponent,
-    PostComponent
+    PostComponent,
+    SignUpComponent,
+    LogInComponent,
+    CreateProfessorComponent,
+    CreatePostComponent
   ],
   imports: [
     BrowserModule,
