@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './components/header/header.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field'
@@ -15,6 +15,7 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatCardModule } from '@angular/material/card'
 import { MatInputModule } from '@angular/material/input'
 
+import { HeaderComponent } from './components/header/header.component';
 import { ProfessorComponent } from './components/professor/professor.component'
 import { PostComponent } from './components/post/post.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
@@ -34,6 +35,7 @@ import { CreatePostComponent } from './components/create-post/create-post.compon
     CreatePostComponent
   ],
   imports: [
+    HttpClientModule,
     FormsModule,
     MatInputModule,
     MatFormFieldModule,

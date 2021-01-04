@@ -19,6 +19,12 @@
 	</properties>
 
 	<dependencies>
+		<!-- https://mvnrepository.com/artifact/org.json/json -->
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20201115</version>
+		</dependency>
 		<dependency>
 			<groupId>jakarta.validation</groupId>
 			<artifactId>jakarta.validation-api</artifactId>

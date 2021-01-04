@@ -1,4 +1,4 @@
-import { PostModel } from "./Post"
+import { PostModel } from "./post"
 
 export class UserModel {
     id?: number

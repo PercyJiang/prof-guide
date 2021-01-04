@@ -4,6 +4,7 @@ import com.example.server.dto.UserDto;
 import com.example.server.model.User;
 import com.example.server.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,14 +19,16 @@ public class UserService {
 
     private final UserRepository repository;
 
-    public String create(UserDto dto) {
+    public JSONObject create(UserDto dto) {
         User user = new User();
         user.setUsername(dto.getUsername());
         user.setPassword(dto.getPassword());
         user.setCreated(Instant.now());
         user.setPosts(new ArrayList<>());
         repository.save(user);
-        return "User Create Success";
+        JSONObject json = new JSONObject();
+        json.put("message", "User Create Success");
+        return json;
     }
 
     @Transactional(readOnly = true)
