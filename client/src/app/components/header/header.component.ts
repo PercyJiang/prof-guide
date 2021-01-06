@@ -3,7 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import Swal from 'sweetalert2';
 
 import { SignUpComponent } from '../sign-up/sign-up.component'
-import { LogInComponent } from '../log-in/log-in.component'
 import { CreateProfessorComponent } from '../create-professor/create-professor.component';
 import { CreatePostComponent } from '../create-post/create-post.component';
 
@@ -14,15 +13,11 @@ import { PostModel } from '../../model/post'
 import { UserService } from '../../service/user.service'
 import { ProfessorService } from '../../service/professor.service'
 import { PostService } from '../../service/post.service'
+import { DialogService, LogInStatus } from '../../service/dialog.service'
 
 export interface SignUpDialogData {
   username: string;
   password: string;
-}
-
-export interface LogInDialogData {
-  username: String;
-  password: String;
 }
 
 export interface CreateProfDialogData {
@@ -45,18 +40,19 @@ export interface CreatePostDialogData {
 })
 export class HeaderComponent implements OnInit {
 
-  isLoggedIn!: boolean
+  logInStatus!: LogInStatus
 
   constructor(
     public dialog: MatDialog,
     private userService: UserService,
     private profService: ProfessorService,
-    private postService: PostService
-  ) { }
-
-  ngOnInit(): void {
-    this.isLoggedIn = false
+    private postService: PostService,
+    private dialogService: DialogService
+  ) {
+    this.logInStatus = dialogService.logInStatus
   }
+
+  ngOnInit(): void { }
 
   signUp(): void {
     const dialogRef = this.dialog.open(SignUpComponent, {
@@ -79,36 +75,11 @@ export class HeaderComponent implements OnInit {
   }
 
   logIn(): void {
-    const dialogRef = this.dialog.open(LogInComponent, {
-      width: '400px',
-      data: { username: '', password: '' }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) {
-        this.userService.getAll().subscribe(users => {
-          for (let i in users) {
-            if (result.username === users[i].username && result.password === users[i].password) {
-              this.isLoggedIn = true
-              Swal.fire({
-                icon: 'success',
-                title: 'Log In Successful'
-              })
-            }
-          }
-          if (!this.isLoggedIn) {
-            Swal.fire({
-              icon: 'error',
-              title: 'Log In Failed'
-            })
-          }
-        })
-      }
-    });
+    this.dialogService.logIn(this.dialog)
   }
 
   logOut(): void {
-    this.isLoggedIn = false
+    this.logInStatus.isLoggedIn = false
     Swal.fire({
       icon: 'success',
       title: 'Log Out Successful'

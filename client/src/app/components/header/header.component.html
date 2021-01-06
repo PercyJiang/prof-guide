@@ -1,11 +1,11 @@
 <mat-toolbar color="primary">
     <span>Professor Guide</span>
     <span class="example-spacer"></span>
-    <div *ngIf="!isLoggedIn" class="example-button-row">
+    <div *ngIf="!logInStatus.isLoggedIn" class="example-button-row">
         <button mat-raised-button color="accent" (click)="signUp()">Sign Up</button>
         <button mat-raised-button color="accent" (click)="logIn()">Log In</button>
     </div>
-    <div *ngIf="isLoggedIn" class="example-button-row">
+    <div *ngIf="logInStatus.isLoggedIn" class="example-button-row">
         <button mat-raised-button color="accent" (click)="createProfessor()">Create Professor</button>
         <button mat-raised-button color="accent" (click)="createPost()">Create Post</button>
         <button mat-raised-button color="warn" (click)="logOut()">Log Out</button>
