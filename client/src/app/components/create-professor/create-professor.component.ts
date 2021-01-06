@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CreateProfDialogData } from '../header/header.component';
+import { CreateProfDialogData } from '../../service/dialog.service'
 
 @Component({
   selector: 'app-create-professor',

@@ -14,7 +14,6 @@ import { PostModel } from '../model/post'
 import { UserService } from './user.service'
 import { ProfessorService } from './professor.service'
 import { PostService } from './post.service'
-import { Subject } from 'rxjs';
 
 export interface LogInStatus {
   isLoggedIn: Boolean
@@ -23,6 +22,24 @@ export interface LogInStatus {
 export interface LogInDialogData {
   username: String
   password: String
+}
+
+export interface SignUpDialogData {
+  username: String;
+  password: String;
+}
+
+export interface CreateProfDialogData {
+  profName: String;
+  schoolName: String;
+}
+
+export interface CreatePostDialogData {
+  profName: String;
+  schoolName: String;
+  score: Number;
+  difficulty: Number;
+  comment: String;
 }
 
 @Injectable({
@@ -38,7 +55,24 @@ export class DialogService {
     private postService: PostService
   ) { }
 
-  isLoggedInChange: Subject<Boolean> = new Subject<Boolean>()
+  signUp(dialog: MatDialog): void {
+    const dialogRef = dialog.open(SignUpComponent, {
+      width: '400px',
+      data: { username: '', password: '' }
+    })
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Sign Up Successful'
+        })
+        const model = new UserModel()
+        model.username = result.username
+        model.password = result.password
+        this.userService.create(model).subscribe()
+      }
+    })
+  }
 
   logIn(dialog: MatDialog): void {
     const dialogRef = dialog.open(LogInComponent, {
@@ -64,6 +98,45 @@ export class DialogService {
             })
           }
         })
+      }
+    })
+  }
+
+  createProfessor(dialog: MatDialog): void {
+    const dialogRef = dialog.open(CreateProfessorComponent, {
+      width: '400px',
+      data: { profName: '', schoolName: '' }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Professor Create Success'
+        })
+        const model = new ProfessorModel()
+        model.profName = result.profName
+        model.schoolName = result.schoolName
+        this.profService.create(model).subscribe()
+      }
+    })
+  }
+
+  createPost(dialog: MatDialog): void {
+    const dialogRef = dialog.open(CreatePostComponent, {
+      width: '400px',
+      data: { profName: '', schoolName: '', score: '', difficulty: '', comment: '' }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result !== undefined) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Post Create Success'
+        })
+        const model = new PostModel()
+        model.score = result.score
+        model.difficulty = result.difficulty
+        model.comment = result.comment
+        this.postService.create(model).subscribe()
       }
     })
   }

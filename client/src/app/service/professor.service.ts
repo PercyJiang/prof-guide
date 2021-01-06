@@ -19,8 +19,12 @@ export class ProfessorService {
     return this.http.get<ProfessorModel>(server_url + '/api/prof/get/' + id)
   }
 
+  getAll(): Observable<ProfessorModel[]> {
+    return this.http.get<ProfessorModel[]>(server_url + '/api/prof')
+  }
+
   update(id: number, model: ProfessorModel) {
-    return this.http.put<ProfessorModel>(server_url + 'api/prof/' + id, model)
+    return this.http.put<ProfessorModel>(server_url + '/api/prof/' + id, model)
   }
 
   delete(id: number) {

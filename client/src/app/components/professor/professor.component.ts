@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ProfessorModel } from 'src/app/model/professor';
+import { ProfessorService } from 'src/app/service/professor.service';
 
 @Component({
   selector: 'app-professor',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfessorComponent implements OnInit {
 
-  constructor() { }
+  professorList!: ProfessorModel[]
+
+  constructor(private profService: ProfessorService) { }
 
   ngOnInit(): void {
+    this.profService.getAll().subscribe(data => { this.professorList = data })
   }
 
 }
