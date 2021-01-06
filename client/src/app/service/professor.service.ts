@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { server_url } from '../constants';
 import { ProfessorModel } from '../model/professor';
 
 @Injectable({

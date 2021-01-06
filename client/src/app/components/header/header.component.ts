@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 
 import { SignUpComponent } from '../sign-up/sign-up.component'
 import { LogInComponent } from '../log-in/log-in.component'
@@ -8,10 +7,16 @@ import { LogInComponent } from '../log-in/log-in.component'
 import { UserModel } from '../../model/user'
 
 import { UserService } from '../../service/user.service'
+import Swal from 'sweetalert2';
 
-export interface DialogData {
+export interface SignUpDialogData {
   username: string;
   password: string;
+}
+
+export interface LogInDialogData {
+  username: String;
+  password: String;
 }
 
 @Component({
@@ -21,22 +26,21 @@ export interface DialogData {
 })
 export class HeaderComponent implements OnInit {
 
-  username!: string;
-  password!: string;
+  isLoggedIn!: boolean
 
   constructor(
     public dialog: MatDialog,
-    private userService: UserService,
-    private router: Router
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
+    this.isLoggedIn = false
   }
 
   signUp(): void {
     const dialogRef = this.dialog.open(SignUpComponent, {
-      width: '300px',
-      data: { username: this.username, password: this.password }
+      width: '400px',
+      data: { username: '', password: '' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -51,14 +55,31 @@ export class HeaderComponent implements OnInit {
 
   logIn(): void {
     const dialogRef = this.dialog.open(LogInComponent, {
-      width: '300px',
-      data: { username: this.username, password: this.password }
+      width: '400px',
+      data: { username: '', password: '' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        this.username = result.username;
-        this.password = result.password;
+        this.userService.getAll().subscribe(users => {
+          for (let i in users) {
+            if (result.username === users[i].username && result.password === users[i].password) {
+              this.isLoggedIn = true
+              Swal.fire({
+                icon: 'success',
+                title: 'Welcome!',
+                text: 'Log In Successful'
+              })
+            }
+          }
+          if (!this.isLoggedIn) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Sorry!',
+              text: 'Log In Failed'
+            })
+          }
+        })
       }
     });
   }

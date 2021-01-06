@@ -20,6 +20,10 @@ export class UserService {
   }
 
   get(id: number): Observable<UserModel> {
-    return this.http.get<UserModel>(server_url + '/api/user/get/' + id)
+    return this.http.get<UserModel>(server_url + '/api/user/' + id)
+  }
+
+  getAll(): Observable<UserModel[]> {
+    return this.http.get<UserModel[]>(server_url + '/api/user')
   }
 }
