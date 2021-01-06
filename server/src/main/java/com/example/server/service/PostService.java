@@ -4,6 +4,7 @@ import com.example.server.dto.PostDto;
 import com.example.server.model.Post;
 import com.example.server.repository.PostRepository;
 import lombok.AllArgsConstructor;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +18,7 @@ public class PostService {
     private final PostRepository repository;
 
     @Transactional
-    public String create(PostDto dto) {
+    public JSONObject create(PostDto dto) {
         Post post = new Post();
         post.setScore(dto.getScore());
         post.setDifficulty(dto.getDifficulty());
@@ -25,7 +26,9 @@ public class PostService {
         post.setUser(dto.getUser());
         post.setProfessor(dto.getProfessor());
         repository.save(post);
-        return "Post Create Success";
+        JSONObject json = new JSONObject();
+        json.put("message", "Post Create Success");
+        return json;
     }
 
     @Transactional(readOnly = true)
@@ -60,21 +63,31 @@ public class PostService {
     }
 
     @Transactional
-    public String update(Long id, PostDto dto) {
+    public JSONObject update(Long id, PostDto dto) {
+        JSONObject json = new JSONObject();
         Post post = repository.findById(id).orElse(null);
-        if (post == null) return "Post id " + id + " not found";
+        if (post == null) {
+            json.put("message", "Post id " + id + " not found");
+            return json;
+        }
         post.setScore(dto.getScore());
         post.setDifficulty(dto.getDifficulty());
         post.setComment(dto.getComment());
         repository.save(post);
-        return "Post Update Success";
+        json.put("message", "Post Update Success");
+        return json;
     }
 
     @Transactional
-    public String delete(Long id) {
+    public JSONObject delete(Long id) {
+        JSONObject json = new JSONObject();
         Post post = repository.findById(id).orElse(null);
-        if (post == null) return "Post id " + id + " not found";
+        if (post == null) {
+            json.put("message", "Post id " + id + " not found");
+            return json;
+        }
         repository.deleteById(id);
-        return "Post Delete Success";
+        json.put("message", "Post Delete Success");
+        return json;
     }
 }

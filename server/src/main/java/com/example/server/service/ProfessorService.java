@@ -4,6 +4,7 @@ import com.example.server.dto.ProfessorDto;
 import com.example.server.model.Professor;
 import com.example.server.repository.ProfessorRepository;
 import lombok.AllArgsConstructor;
+import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,14 +19,16 @@ public class ProfessorService {
     private final ProfessorRepository repository;
 
     @Transactional
-    public String create(ProfessorDto dto) {
+    public JSONObject create(ProfessorDto dto) {
         Professor professor = new Professor();
         professor.setProfName(dto.getProfName());
         professor.setSchoolName(dto.getSchoolName());
         professor.setCreatedDate(Instant.now());
         professor.setPosts(new ArrayList<>());
         repository.save(professor);
-        return "Professor Create Success";
+        JSONObject json = new JSONObject();
+        json.put("message", "Professor Create Success");
+        return json;
     }
 
     @Transactional(readOnly = true)
@@ -58,20 +61,30 @@ public class ProfessorService {
     }
 
     @Transactional
-    public String update(Long id, ProfessorDto dto) {
+    public JSONObject update(Long id, ProfessorDto dto) {
+        JSONObject json = new JSONObject();
         Professor professor = repository.findById(id).orElse(null);
-        if (professor == null) return "Professor id " + id + " not found";
+        if (professor == null) {
+            json.put("message", "Professor id " + id + " not found");
+            return json;
+        }
         professor.setProfName(dto.getProfName());
         professor.setSchoolName(dto.getSchoolName());
         repository.save(professor);
-        return "Professor Update Success";
+        json.put("message", "Professor Update Success");
+        return json;
     }
 
     @Transactional
-    public String delete(Long id) {
+    public JSONObject delete(Long id) {
+        JSONObject json = new JSONObject();
         Professor professor = repository.findById(id).orElse(null);
-        if (professor == null) return "Professor id " + id + " not found";
+        if (professor == null) {
+            json.put("message", "Professor id " + id + " not found");
+            return json;
+        }
         repository.deleteById(id);
-        return "Professor Delete Success";
+        json.put("message", "Professor Delete Success");
+        return json;
     }
 }

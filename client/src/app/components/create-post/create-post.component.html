@@ -1,1 +1,35 @@
-<p>create-post works!</p>
+<h1 mat-dialog-title>Add a new post to the site!</h1>
+<div mat-dialog-content>
+    <p>Please rate a professor</p>
+    <mat-form-field>
+        <mat-label>Professor Full Name</mat-label>
+        <input matInput [(ngModel)]="data.profName">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>School Name</mat-label>
+        <input matInput [(ngModel)]="data.schoolName">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Score</mat-label>
+        <input matInput [(ngModel)]="data.score">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Difficulty</mat-label>
+        <input matInput [(ngModel)]="data.difficulty">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+        <mat-label>Comment</mat-label>
+        <input matInput [(ngModel)]="data.comment">
+    </mat-form-field>
+    <br>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancel</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="data" cdkFocusInitial>
+        Ok
+    </button>
+</div>

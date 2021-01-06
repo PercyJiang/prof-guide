@@ -3,6 +3,7 @@ package com.example.server.controller;
 import com.example.server.dto.PostDto;
 import com.example.server.service.PostService;
 import lombok.AllArgsConstructor;
+import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<String> create(@RequestBody PostDto dto) {
+    public ResponseEntity<JSONObject> create(@RequestBody PostDto dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
     }
 
@@ -37,12 +38,12 @@ public class PostController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> update(@PathVariable Long id, @RequestBody PostDto dto) {
+    public ResponseEntity<JSONObject> update(@PathVariable Long id, @RequestBody PostDto dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.update(id, dto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id) {
+    public ResponseEntity<JSONObject> delete(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.delete(id));
     }
 }

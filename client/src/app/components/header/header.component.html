@@ -6,8 +6,8 @@
         <button mat-raised-button color="accent" (click)="logIn()">Log In</button>
     </div>
     <div *ngIf="isLoggedIn" class="example-button-row">
-        <button mat-raised-button color="accent">Create Professor</button>
-        <button mat-raised-button color="accent">Create Post</button>
-        <button mat-raised-button color="warn">Log Out</button>
+        <button mat-raised-button color="accent" (click)="createProfessor()">Create Professor</button>
+        <button mat-raised-button color="accent" (click)="createPost()">Create Post</button>
+        <button mat-raised-button color="warn" (click)="logOut()">Log Out</button>
     </div>
 </mat-toolbar>

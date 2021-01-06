@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field'
-import { MatDialogModule } from '@angular/material/dialog'
+import { MatDialogModule, MatDialogRef } from '@angular/material/dialog'
 import { MatToolbarModule } from '@angular/material/toolbar'
 import { MatButtonModule } from '@angular/material/button'
 import { MatIconModule } from '@angular/material/icon'
@@ -48,7 +48,7 @@ import { CreatePostComponent } from './components/create-post/create-post.compon
     MatIconModule,
     MatCardModule
   ],
-  providers: [],
+  providers: [{ provide: MatDialogRef, useValue: {} }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
