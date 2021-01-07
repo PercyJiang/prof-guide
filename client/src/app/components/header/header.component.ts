@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private dialogService: DialogService
+    private dialogService: DialogService,
   ) {
     this.logInStatus = dialogService.logInStatus
   }
@@ -35,7 +35,5 @@ export class HeaderComponent implements OnInit {
   logIn(): void { this.dialogService.logIn(this.dialog) }
 
   createProfessor(): void { this.dialogService.createProfessor(this.dialog) }
-
-  createPost(): void { this.dialogService.createPost(this.dialog) }
 
 }

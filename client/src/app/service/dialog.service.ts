@@ -15,9 +15,7 @@ import { UserService } from './user.service'
 import { ProfessorService } from './professor.service'
 import { PostService } from './post.service'
 
-export interface LogInStatus {
-  isLoggedIn: Boolean
-}
+export interface LogInStatus { isLoggedIn: Boolean }
 
 export interface LogInDialogData {
   username: String
@@ -52,7 +50,7 @@ export class DialogService {
   constructor(
     private userService: UserService,
     private profService: ProfessorService,
-    private postService: PostService
+    private postService: PostService,
   ) { }
 
   signUp(dialog: MatDialog): void {
@@ -109,14 +107,14 @@ export class DialogService {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result !== undefined) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Professor Create Success'
-        })
         const model = new ProfessorModel()
         model.profName = result.profName
         model.schoolName = result.schoolName
         this.profService.create(model).subscribe()
+        Swal.fire({
+          icon: 'success',
+          title: 'Professor Create Success'
+        }).then(() => window.location.reload())
       }
     })
   }
