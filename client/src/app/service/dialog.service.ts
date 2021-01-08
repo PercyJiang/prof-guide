@@ -100,23 +100,46 @@ export class DialogService {
     })
   }
 
-  createProfessor(dialog: MatDialog): void {
-    const dialogRef = dialog.open(CreateProfessorComponent, {
-      width: '400px',
-      data: { profName: '', schoolName: '' }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) {
-        const model = new ProfessorModel()
-        model.profName = result.profName
-        model.schoolName = result.schoolName
-        this.profService.create(model).subscribe()
-        Swal.fire({
-          icon: 'success',
-          title: 'Professor Create Success'
-        }).then(() => window.location.reload())
-      }
-    })
+  createProfessor(dialog: MatDialog, id: number | null): void {
+    if (id === null) {
+      const dialogRef = dialog.open(CreateProfessorComponent, {
+        width: '400px',
+        data: { profName: '', schoolName: '' }
+      })
+      dialogRef.afterClosed().subscribe(result => {
+        if (result !== undefined) {
+          const model = new ProfessorModel()
+          model.profName = result.profName
+          model.schoolName = result.schoolName
+          this.profService.create(model).subscribe()
+          Swal.fire({
+            icon: 'success',
+            title: 'Professor Create Success'
+          }).then(() => window.location.reload())
+        }
+      })
+    } else {
+      this.profService.get(id).subscribe(result => {
+        const dialogRef = dialog.open(CreateProfessorComponent, {
+          width: '400px',
+          data: result
+        })
+        dialogRef.afterClosed().subscribe(result => {
+          if (result !== undefined) {
+            const model = new ProfessorModel()
+            model.profName = result.profName
+            model.schoolName = result.schoolName
+            model.posts = result.posts
+            this.profService.update(id, model).subscribe()
+            Swal.fire({
+              icon: 'success',
+              title: 'Professor Update Success'
+            }).then(() => window.location.reload())
+          }
+        })
+      })
+    }
+
   }
 
   createPost(dialog: MatDialog): void {

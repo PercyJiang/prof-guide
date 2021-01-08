@@ -34,6 +34,6 @@ export class HeaderComponent implements OnInit {
 
   logIn(): void { this.dialogService.logIn(this.dialog) }
 
-  createProfessor(): void { this.dialogService.createProfessor(this.dialog) }
+  createProfessor(): void { this.dialogService.createProfessor(this.dialog, null) }
 
 }

@@ -16,7 +16,7 @@ export class ProfessorService {
   }
 
   get(id: number): Observable<ProfessorModel> {
-    return this.http.get<ProfessorModel>(server_url + '/api/prof/get/' + id)
+    return this.http.get<ProfessorModel>(server_url + '/api/prof/' + id)
   }
 
   getAll(): Observable<ProfessorModel[]> {

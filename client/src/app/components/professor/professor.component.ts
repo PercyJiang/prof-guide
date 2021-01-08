@@ -25,6 +25,10 @@ export class ProfessorComponent implements OnInit {
 
   ngOnInit(): void { }
 
+  createPost(): void { this.dialogService.createPost(this.dialog) }
+
+  update(id: number): void { this.dialogService.createProfessor(this.dialog, id) }
+
   delete(id: number): void {
     Swal.fire({
       icon: 'question',
@@ -39,7 +43,5 @@ export class ProfessorComponent implements OnInit {
       }
     })
   }
-
-  createPost(): void { this.dialogService.createPost(this.dialog) }
 
 }
