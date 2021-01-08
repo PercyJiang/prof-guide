@@ -3,10 +3,10 @@
         <mat-card *ngIf="this.prof.id === post.professor!.id!" class="card">
             <mat-card-title>Score: {{post.score}}</mat-card-title>
             <mat-card-subtitle>Difficulty: {{post.difficulty}}</mat-card-subtitle>
-            <mat-card-content>Comment: {{post.comment}}</mat-card-content>
+            <mat-card-content>{{post.comment}}</mat-card-content>
             <mat-card-actions layout="row" layout-align="end center">
-                <button mat-raised-button color="primary">Update</button>
-                <button mat-raised-button color="warn">Delete</button>
+                <button mat-raised-button color="primary" (click)="update(this.prof.id, post.id!)">Update</button>
+                <button mat-raised-button color="warn" (click)="delete(post.id!)">Delete</button>
             </mat-card-actions>
         </mat-card>
     </li>

@@ -4,6 +4,7 @@ import { PostModel } from 'src/app/model/post';
 import { ProfessorModel } from 'src/app/model/professor';
 import { DialogService } from 'src/app/service/dialog.service';
 import { PostService } from 'src/app/service/post.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-post',
@@ -27,6 +28,21 @@ export class PostComponent implements OnInit {
 
   ngOnInit(): void { }
 
-  // update(id: number): void { this.dialogService.formPost(this.dialog, id) }
+  update(profId: number, postId: number): void { this.dialogService.formPost(profId, this.dialog, postId) }
+
+  delete(id: number): void {
+    Swal.fire({
+      icon: 'question',
+      title: 'Are you sure about this?',
+      showDenyButton: true,
+      confirmButtonText: `Yes`,
+      denyButtonText: `No`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.postService.delete(id).subscribe()
+        window.location.reload()
+      }
+    })
+  }
 
 }

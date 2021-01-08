@@ -184,7 +184,7 @@ export class DialogService {
               Swal.fire({
                 icon: 'success',
                 title: 'Post Update Success'
-              })
+              }).then(() => window.location.reload())
             })
           }
         })
