@@ -14,6 +14,7 @@ import { PostModel } from '../model/post'
 import { UserService } from './user.service'
 import { ProfessorService } from './professor.service'
 import { PostService } from './post.service'
+import { Router } from '@angular/router';
 
 export interface LogInStatus { isLoggedIn: Boolean }
 
@@ -51,6 +52,7 @@ export class DialogService {
     private userService: UserService,
     private profService: ProfessorService,
     private postService: PostService,
+    private router: Router,
   ) { }
 
   signUp(dialog: MatDialog): void {
