@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -23,7 +24,7 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<JSONObject> create(@RequestBody PostDto dto) {
+    public ResponseEntity<HashMap<String, String>> create(@RequestBody PostDto dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
     }
 

@@ -157,10 +157,12 @@ export class DialogService {
             model.difficulty = result.difficulty
             model.comment = result.comment
             this.postService.create(model).subscribe()
+            prof.posts?.push(model)
+            this.profService.update(profId, prof)
             Swal.fire({
               icon: 'success',
               title: 'Post Create Success'
-            })
+            }).then(() => window.location.reload())
           })
         }
       })

@@ -1,7 +1,9 @@
 package com.example.server.service;
 
 import com.example.server.dto.PostDto;
+import com.example.server.dto.ProfessorDto;
 import com.example.server.model.Post;
+import com.example.server.model.Professor;
 import com.example.server.repository.PostRepository;
 import lombok.AllArgsConstructor;
 import org.json.JSONObject;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -18,15 +21,18 @@ public class PostService {
     private final PostRepository repository;
 
     @Transactional
-    public JSONObject create(PostDto dto) {
+    public HashMap<String, String> create(PostDto dto) {
+        Professor professor = new Professor();
+        professor.setId(dto.getProfessor().getId());
+
         Post post = new Post();
         post.setScore(dto.getScore());
         post.setDifficulty(dto.getDifficulty());
         post.setComment(dto.getComment());
         post.setUser(dto.getUser());
-        post.setProfessor(dto.getProfessor());
+        post.setProfessor(professor);
         repository.save(post);
-        JSONObject json = new JSONObject();
+        HashMap<String, String> json = new HashMap<>();
         json.put("message", "Post Create Success");
         return json;
     }
@@ -36,28 +42,25 @@ public class PostService {
         List<PostDto> dtos = new ArrayList<>();
         List<Post> posts = repository.findAll();
         for (Post post : posts) {
-            PostDto dto = new PostDto();
-            dto.setId(post.getId());
-            dto.setScore(post.getScore());
-            dto.setDifficulty(post.getDifficulty());
-            dto.setComment(post.getComment());
-            dto.setProfessor(post.getProfessor());
-            dto.setUser(post.getUser());
-            dtos.add(dto);
+            dtos.add(this.get(post.getId()));
         }
         return dtos;
     }
 
     @Transactional(readOnly = true)
     public PostDto get(Long id) {
-        PostDto dto = new PostDto();
         Post post = repository.findById(id).orElse(null);
         if (post == null) return null;
+
+        ProfessorDto professor = new ProfessorDto();
+        professor.setId(post.getProfessor().getId());
+
+        PostDto dto = new PostDto();
         dto.setId(post.getId());
         dto.setScore(post.getScore());
         dto.setDifficulty(post.getDifficulty());
         dto.setComment(post.getComment());
-        dto.setProfessor(post.getProfessor());
+        dto.setProfessor(professor);
         dto.setUser(post.getUser());
         return dto;
     }

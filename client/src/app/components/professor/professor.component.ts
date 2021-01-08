@@ -19,9 +19,7 @@ export class ProfessorComponent implements OnInit {
     public dialog: MatDialog,
     private dialogService: DialogService,
     private profService: ProfessorService,
-  ) {
-    this.profService.getAll().subscribe(data => this.professorList = data)
-  }
+  ) { this.profService.getAll().subscribe(data => this.professorList = data) }
 
   ngOnInit(): void { }
 

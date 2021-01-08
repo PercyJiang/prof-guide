@@ -1,9 +1,13 @@
-<mat-card>
-    <mat-card-title>Score</mat-card-title>
-    <mat-card-subtitle>Difficulty</mat-card-subtitle>
-    <mat-card-content>Content</mat-card-content>
-    <mat-card-actions layout="row" layout-align="end center">
-        <button mat-raised-button color="primary">Update</button>
-        <button mat-raised-button color="warn">Delete</button>
-    </mat-card-actions>
-</mat-card>
+<div class="col-md-9">
+    <li *ngFor="let post of postList">
+        <mat-card *ngIf="this.prof.id === post.professor!.id!" class="card">
+            <mat-card-title>Score: {{post.score}}</mat-card-title>
+            <mat-card-subtitle>Difficulty: {{post.difficulty}}</mat-card-subtitle>
+            <mat-card-content>Comment: {{post.comment}}</mat-card-content>
+            <mat-card-actions layout="row" layout-align="end center">
+                <button mat-raised-button color="primary">Update</button>
+                <button mat-raised-button color="warn">Delete</button>
+            </mat-card-actions>
+        </mat-card>
+    </li>
+</div>

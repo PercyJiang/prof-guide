@@ -1,17 +1,18 @@
 <div class="col-md-9">
     <ul>
         <li *ngFor="let prof of professorList">
-            <mat-card>
+            <mat-card class="card">
                 <mat-card-title>{{prof.profName}}</mat-card-title>
                 <mat-card-subtitle>{{prof.schoolName}}</mat-card-subtitle>
+                <p>Created: {{unixToDate(prof.createdDate)}}</p>
                 <mat-card-actions layout="row" layout-align="end center">
                     <button mat-raised-button color="accent" (click)="createPost(prof.id!)">Create Post</button>
                     <button mat-raised-button color="primary" (click)="update(prof.id!)">Update</button>
                     <button mat-raised-button color="warn" (click)="delete(prof.id!)">Delete</button>
                 </mat-card-actions>
-                <mat-card-footer>Created: {{unixToDate(prof.createdDate)}}</mat-card-footer>
+                <mat-card-footer></mat-card-footer>
+                <app-post [prof]="prof"></app-post>
             </mat-card>
-            <app-post></app-post>
         </li>
     </ul>
 </div>

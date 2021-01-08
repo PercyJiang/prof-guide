@@ -1,0 +1,12 @@
+.card {
+    padding: 5px;
+    margin: 20px;
+    width: 900px;
+}
+
+ul li {
+    display: table-row;
+    height: 100px;
+    list-style-type: none;
+    margin: 10px;
+}

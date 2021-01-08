@@ -19,8 +19,12 @@ export class PostService {
     return this.http.get<PostModel>(server_url + '/api/post/' + id)
   }
 
+  getAll(): Observable<PostModel[]> {
+    return this.http.get<PostModel[]>(server_url + '/api/post')
+  }
+
   update(id: number, model: PostModel) {
-    return this.http.put<PostModel>(server_url + 'api/post/' + id, model)
+    return this.http.put<PostModel>(server_url + '/api/post/' + id, model)
   }
 
   delete(id: number) {

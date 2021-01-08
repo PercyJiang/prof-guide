@@ -6,6 +6,6 @@ export class PostModel {
     score!: number
     difficulty!: number
     comment!: string
-    user!: UserModel
-    professor!: ProfessorModel
+    user?: UserModel
+    professor?: ProfessorModel
 }
