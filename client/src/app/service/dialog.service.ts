@@ -101,6 +101,10 @@ export class DialogService {
   }
 
   formProf(dialog: MatDialog, id: number | null): void {
+    if (this.logInStatus.isLoggedIn === false) {
+      Swal.fire({ icon: 'error', title: 'You have to login first' })
+      return
+    }
     if (id === null) {
       const dialogRef = dialog.open(CreateProfessorComponent, {
         width: '400px',
@@ -143,6 +147,10 @@ export class DialogService {
   }
 
   formPost(profId: number, dialog: MatDialog, postId: number | null): void {
+    if (this.logInStatus.isLoggedIn === false) {
+      Swal.fire({ icon: 'error', title: 'You have to login first' })
+      return
+    }
     if (postId === null) {
       const dialogRef = dialog.open(CreatePostComponent, {
         width: '400px',

@@ -3,7 +3,7 @@ import { ProfessorModel } from 'src/app/model/professor';
 import { ProfessorService } from 'src/app/service/professor.service';
 import { MatDialog } from '@angular/material/dialog';
 
-import { DialogService } from '../../service/dialog.service'
+import { DialogService, LogInStatus } from '../../service/dialog.service'
 import Swal from 'sweetalert2';
 
 @Component({
@@ -13,13 +13,17 @@ import Swal from 'sweetalert2';
 })
 export class ProfessorComponent implements OnInit {
 
+  logInStatus!: LogInStatus
   professorList!: ProfessorModel[]
 
   constructor(
     public dialog: MatDialog,
     private dialogService: DialogService,
     private profService: ProfessorService,
-  ) { this.profService.getAll().subscribe(data => this.professorList = data) }
+  ) {
+    this.logInStatus = dialogService.logInStatus
+    this.profService.getAll().subscribe(data => this.professorList = data)
+  }
 
   ngOnInit(): void { }
 
@@ -33,6 +37,10 @@ export class ProfessorComponent implements OnInit {
   update(id: number): void { this.dialogService.formProf(this.dialog, id) }
 
   delete(id: number): void {
+    if (this.logInStatus.isLoggedIn === false) {
+      Swal.fire({ icon: 'error', title: 'You have to login first' })
+      return
+    }
     Swal.fire({
       icon: 'question',
       title: 'Are you sure about this?',
