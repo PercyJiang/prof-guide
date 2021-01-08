@@ -100,7 +100,7 @@ export class DialogService {
     })
   }
 
-  createProfessor(dialog: MatDialog, id: number | null): void {
+  formProf(dialog: MatDialog, id: number | null): void {
     if (id === null) {
       const dialogRef = dialog.open(CreateProfessorComponent, {
         width: '400px',
@@ -142,23 +142,51 @@ export class DialogService {
 
   }
 
-  createPost(dialog: MatDialog): void {
-    const dialogRef = dialog.open(CreatePostComponent, {
-      width: '400px',
-      data: { profName: '', schoolName: '', score: '', difficulty: '', comment: '' }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result !== undefined) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Post Create Success'
+  formPost(profId: number, dialog: MatDialog, postId: number | null): void {
+    if (postId === null) {
+      const dialogRef = dialog.open(CreatePostComponent, {
+        width: '400px',
+        data: { schoolName: '', score: '', difficulty: '', comment: '' }
+      })
+      dialogRef.afterClosed().subscribe(result => {
+        if (result !== undefined) {
+          this.profService.get(profId).subscribe(prof => {
+            const model = new PostModel()
+            model.professor = prof
+            model.score = result.score
+            model.difficulty = result.difficulty
+            model.comment = result.comment
+            this.postService.create(model).subscribe()
+            Swal.fire({
+              icon: 'success',
+              title: 'Post Create Success'
+            })
+          })
+        }
+      })
+    } else {
+      this.postService.get(postId).subscribe(result => {
+        const dialogRef = dialog.open(CreatePostComponent, {
+          width: '400px',
+          data: result
         })
-        const model = new PostModel()
-        model.score = result.score
-        model.difficulty = result.difficulty
-        model.comment = result.comment
-        this.postService.create(model).subscribe()
-      }
-    })
+        dialogRef.afterClosed().subscribe(result => {
+          if (result !== undefined) {
+            this.profService.get(profId).subscribe(prof => {
+              const model = new PostModel()
+              model.professor = prof
+              model.score = result.score
+              model.difficulty = result.difficulty
+              model.comment = result.comment
+              this.postService.update(postId, model).subscribe()
+              Swal.fire({
+                icon: 'success',
+                title: 'Post Update Success'
+              })
+            })
+          }
+        })
+      })
+    }
   }
 }

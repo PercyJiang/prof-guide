@@ -5,7 +5,7 @@ export class PostModel {
     id?: number
     score!: number
     difficulty!: number
-    comment!: String
+    comment!: string
     user!: UserModel
     professor!: ProfessorModel
 }

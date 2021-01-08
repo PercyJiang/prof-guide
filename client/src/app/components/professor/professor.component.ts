@@ -20,14 +20,19 @@ export class ProfessorComponent implements OnInit {
     private dialogService: DialogService,
     private profService: ProfessorService,
   ) {
-    this.profService.getAll().subscribe(data => { this.professorList = data })
+    this.profService.getAll().subscribe(data => this.professorList = data)
   }
 
   ngOnInit(): void { }
 
-  createPost(): void { this.dialogService.createPost(this.dialog) }
+  unixToDate(unix: any): string {
+    let date: Date = new Date(unix * 1000)
+    return date.getFullYear() + '/' + date.getMonth() + 1 + '/' + date.getDate()
+  }
 
-  update(id: number): void { this.dialogService.createProfessor(this.dialog, id) }
+  createPost(profId: number): void { this.dialogService.formPost(profId, this.dialog, null) }
+
+  update(id: number): void { this.dialogService.formProf(this.dialog, id) }
 
   delete(id: number): void {
     Swal.fire({
