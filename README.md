@@ -6,5 +6,5 @@ A professor rating site that allow users to create, read, update, and delete rev
 
 MySQL;  
 Java; Spring Boot;  
-NodeJS; AngularJS;
+NodeJS; AngularJS;  
 Angular Material;  
